@@ -1,0 +1,134 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Animes</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0f172a;
+        color: white;
+        margin: 0;
+    }
+
+    header {
+        background: #1e293b;
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 80%;
+        padding: 10px;
+        margin: 20px auto;
+        display: block;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .card {
+        background: #1e293b;
+        padding: 15px;
+        border-radius: 15px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        background: #334155;
+    }
+
+    .title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .details {
+        display: none;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<header>📺 Lista de Animes</header>
+
+<input type="text" id="search" placeholder="Buscar anime...">
+
+<div class="container" id="animeContainer"></div>
+
+<script>
+// 🔥 AQUÍ PEGAS TUS DATOS DEL EXCEL
+const animes = [
+    {
+        nombre: "Go-toubun no Hanayome",
+        estado: "Finalizado",
+        genero: "Romance, Comedia",
+        descripcion: "Un estudiante ayuda a cinco hermanas con sus estudios."
+    },
+    {
+        nombre: "Renai Flops",
+        estado: "Finalizado",
+        genero: "Romance, Ecchi",
+        descripcion: "Un estudiante conoce varias chicas con destinos entrelazados."
+    },
+    {
+        nombre: "Romantic Killer",
+        estado: "Finalizado",
+        genero: "Comedia, Romance",
+        descripcion: "Una chica es obligada a vivir situaciones románticas."
+    }
+];
+
+// Mostrar animes
+function mostrarAnimes(lista) {
+    const container = document.getElementById("animeContainer");
+    container.innerHTML = "";
+
+    lista.forEach(anime => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+            <div class="title">${anime.nombre}</div>
+            <div>Estado: ${anime.estado}</div>
+            <div>Género: ${anime.genero}</div>
+            <div class="details">${anime.descripcion}</div>
+        `;
+
+        card.onclick = () => {
+            const details = card.querySelector(".details");
+            details.style.display = details.style.display === "block" ? "none" : "block";
+        };
+
+        container.appendChild(card);
+    });
+}
+
+// Buscador
+document.getElementById("search").addEventListener("input", (e) => {
+    const texto = e.target.value.toLowerCase();
+    const filtrados = animes.filter(a => 
+        a.nombre.toLowerCase().includes(texto)
+    );
+    mostrarAnimes(filtrados);
+});
+
+// Inicial
+mostrarAnimes(animes);
+</script>
+
+</body>
+</html>
